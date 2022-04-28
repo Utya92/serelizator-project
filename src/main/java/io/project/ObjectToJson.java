@@ -1,7 +1,9 @@
 package io.project;
 
+import java.io.FileWriter;
 import java.lang.reflect.Field;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
 
@@ -16,7 +18,7 @@ public class ObjectToJson {
         }
     }
 
- 
+
     private String getJsonToString(Object o) throws IllegalAccessException {
         Class<?> clazz = o.getClass();
         Map<String, String> jsonElements = new LinkedHashMap<>();
@@ -38,7 +40,20 @@ public class ObjectToJson {
         return "{" + jsonString + "}";
     }
 
+    public void write(List<String> listOfClients) {
+        try (FileWriter writer = new FileWriter("output.json")) {
+            for (String listOfClient : listOfClients) {
+                writer.write( listOfClient + "\n");
 
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
 }
 
 
