@@ -14,10 +14,8 @@ public class ObjectToJson {
             return getJsonToString(o);
         } catch (Exception e) {
             throw new RuntimeException("converting failed");
-
         }
     }
-
 
     private String getJsonToString(Object o) throws IllegalAccessException {
         Class<?> clazz = o.getClass();
@@ -29,7 +27,7 @@ public class ObjectToJson {
             }
         }
 
-        StringJoiner joiner = new StringJoiner(",");
+        StringJoiner joiner = new StringJoiner(", ");
         for (Map.Entry<String, String> entry : jsonElements.entrySet()) {
             String s = "\"" + entry.getKey() + "\":\""
                     + entry.getValue() + "\"";
@@ -41,43 +39,21 @@ public class ObjectToJson {
     }
 
     public void write(List<String> listOfClients) {
-        try (FileWriter writer = new FileWriter("output.json")) {
-            for (String listOfClient : listOfClients) {
-                writer.write( listOfClient + "\n");
 
-
+        String prefix = "[";
+        String postfix = "]";
+        try (FileWriter writer = new FileWriter("src/main/resources/output.json")) {
+            writer.write(prefix);
+            for (int i = 0; i < listOfClients.size(); i++) {
+                if (i < listOfClients.size() - 1) {
+                    writer.write(listOfClients.get(i) + "," + "\n");
+                } else {
+                    writer.write(listOfClients.get(i) + "\n");
+                }
             }
-
+            writer.write(postfix);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
